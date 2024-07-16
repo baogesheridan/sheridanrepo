@@ -6,7 +6,7 @@ package ca.sheridancollege.project;
 
 /**
  *
- * @author zhaob
+ * @author: Baoyong zhao
  */
 public class Record {
     public int numMatch;

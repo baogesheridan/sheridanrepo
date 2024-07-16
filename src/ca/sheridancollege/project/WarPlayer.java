@@ -1,5 +1,7 @@
 package ca.sheridancollege.project;
 
+// @author: Baoyong zhao
+
 import java.util.List;
 
 public class WarPlayer extends Player {

@@ -1,5 +1,7 @@
 package ca.sheridancollege.project;
 
+// @author: Baoyong zhao
+
 public class WarCard extends Card {
 
     enum Suit {

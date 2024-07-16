@@ -1,5 +1,7 @@
 package ca.sheridancollege.project;
 
+// @author: Baoyong zhao
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,6 +10,7 @@ public class WarGame extends Game {
     private WarPlayer player1;
     private WarPlayer player2;
     private Scanner scanner;
+    private int counter =0;
 
     public WarGame(String name) {
         super(name);
@@ -50,13 +53,13 @@ public class WarGame extends Game {
     @Override
     public void declareWinner() {
         if (player1.hasCards()) {
-            System.out.println(player1.getName() + " wins the game!");
+            System.out.println(player1.getName() + " wins the game with: "+counter+" rounds.");
             player1.getRecord().setNumMatch(player1.getRecord().getNumMatch() + 1);
             player2.getRecord().setNumMatch(player2.getRecord().getNumMatch() + 1);
             player1.getRecord().setNumWin(player1.getRecord().getNumWin() + 1);
             player2.getRecord().setNumLost(player2.getRecord().getNumLost() + 1);
         } else {
-            System.out.println(player2.getName() + " wins the game!");
+            System.out.println(player2.getName() + " wins the game with: "+counter+" rounds.");
             player1.getRecord().setNumMatch(player1.getRecord().getNumMatch() + 1);
             player2.getRecord().setNumMatch(player2.getRecord().getNumMatch() + 1);
             player2.getRecord().setNumWin(player2.getRecord().getNumWin() + 1);
@@ -64,6 +67,7 @@ public class WarGame extends Game {
         }
         player1.clear();
         player2.clear();
+        counter=0;
     }
 
     private void playRound() {
@@ -77,11 +81,13 @@ public class WarGame extends Game {
         if (comparison > 0) {
             player1.collectCard(card1);
             player1.collectCard(card2);
-            System.out.println(player1.getName() + " wins the round.");
+            counter++;
+            System.out.println(player1.getName() + " wins the round with: " + counter + "rounds.");
         } else if (comparison < 0) {
             player2.collectCard(card1);
             player2.collectCard(card2);
-            System.out.println(player2.getName() + " wins the round.");
+            counter++;
+            System.out.println(player2.getName() + " wins the round with: " + counter + "rounds.");
         } else {
             System.out.println("It's a tie! War!!!");
             ArrayList<WarCard> warPile = new ArrayList<>();
@@ -120,10 +126,10 @@ public class WarGame extends Game {
 
         int comparison = warCard1.getRank().getValue() - warCard2.getRank().getValue();
         if (comparison > 0) {
-            System.out.println(player1.getName() + " wins the war");
+            System.out.println(player1.getName() + " wins the war.");
             return true;
         } else if (comparison < 0) {
-            System.out.println(player2.getName() + " wins the war");
+            System.out.println(player2.getName() + " wins the war.");
             return false;
         } else {
             System.out.println("War again!");
