@@ -1,7 +1,6 @@
 package ca.sheridancollege.project;
 
 // @author: Baoyong zhao
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,7 +9,7 @@ public class WarGame extends Game {
     private WarPlayer player1;
     private WarPlayer player2;
     private Scanner scanner;
-    private int counter =0;
+    private int counter = 0;
 
     public WarGame(String name) {
         super(name);
@@ -45,21 +44,27 @@ public class WarGame extends Game {
 
     @Override
     public void play() {
-        while (player1.hasCards() && player2.hasCards()) {
+        while (player1.hasCards() && player2.hasCards() && counter < 50000) {
             playRound();
         }
     }
 
     @Override
     public void declareWinner() {
-        if (player1.hasCards()) {
-            System.out.println(player1.getName() + " wins the game with: "+counter+" rounds.");
+        if (counter == 50000) {
+            System.out.println(player1.getName() + " ties with: " + player2.getName() + " with " + counter + " rounds.");
+            player1.getRecord().setNumMatch(player1.getRecord().getNumMatch() + 1);
+            player2.getRecord().setNumMatch(player2.getRecord().getNumMatch() + 1);
+            player1.getRecord().setNumTie(player1.getRecord().getNumTie()+1);
+            player2.getRecord().setNumTie(player2.getRecord().getNumTie()+1);
+        } else if (player1.hasCards()) {
+            System.out.println(player1.getName() + " wins the game with: " + counter + " rounds.");
             player1.getRecord().setNumMatch(player1.getRecord().getNumMatch() + 1);
             player2.getRecord().setNumMatch(player2.getRecord().getNumMatch() + 1);
             player1.getRecord().setNumWin(player1.getRecord().getNumWin() + 1);
             player2.getRecord().setNumLost(player2.getRecord().getNumLost() + 1);
         } else {
-            System.out.println(player2.getName() + " wins the game with: "+counter+" rounds.");
+            System.out.println(player2.getName() + " wins the game with: " + counter + " rounds.");
             player1.getRecord().setNumMatch(player1.getRecord().getNumMatch() + 1);
             player2.getRecord().setNumMatch(player2.getRecord().getNumMatch() + 1);
             player2.getRecord().setNumWin(player2.getRecord().getNumWin() + 1);
@@ -67,7 +72,7 @@ public class WarGame extends Game {
         }
         player1.clear();
         player2.clear();
-        counter=0;
+        counter = 0;
     }
 
     private void playRound() {
@@ -82,12 +87,12 @@ public class WarGame extends Game {
             player1.collectCard(card1);
             player1.collectCard(card2);
             counter++;
-            System.out.println(player1.getName() + " wins the round with: " + counter + "rounds.");
+            System.out.println(player1.getName() + " wins the round: " + counter);
         } else if (comparison < 0) {
             player2.collectCard(card1);
             player2.collectCard(card2);
             counter++;
-            System.out.println(player2.getName() + " wins the round with: " + counter + "rounds.");
+            System.out.println(player2.getName() + " wins the round: " + counter);
         } else {
             System.out.println("It's a tie! War!!!");
             ArrayList<WarCard> warPile = new ArrayList<>();
@@ -106,7 +111,6 @@ public class WarGame extends Game {
     private boolean resolveWar(ArrayList<WarCard> warPile) {
 
         // when war, both players play 4 more cards. three cards face down, and the fourth face up.
-
         if (player1.getCardCount() < 4 || player2.getCardCount() < 4) {
             System.out.println("One player does not have enough cards for war. The other player wins.");
             return player1.getCardCount() > player2.getCardCount();
@@ -156,15 +160,17 @@ public class WarGame extends Game {
         scanner.close();
 
         // Display records
-        System.out.println("\nRecord List\n");
+        System.out.println("\n---Record List---\n");
         System.out.println(warGame.player1.getName());
         System.out.println("Number of matches: " + warGame.player1.getRecord().getNumMatch());
         System.out.println("Number of wins: " + warGame.player1.getRecord().getNumWin());
+        System.out.println("Number of ties: " + warGame.player1.getRecord().getNumTie());
         System.out.println("Number of losses: " + warGame.player1.getRecord().getNumLost());
         System.out.println();
         System.out.println(warGame.player2.getName());
         System.out.println("Number of matches: " + warGame.player2.getRecord().getNumMatch());
         System.out.println("Number of wins: " + warGame.player2.getRecord().getNumWin());
+        System.out.println("Number of ties: " + warGame.player2.getRecord().getNumTie());
         System.out.println("Number of losses: " + warGame.player2.getRecord().getNumLost());
     }
 }
